@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: broker-admin-grpc-server
+  datasource:
+    type: io.bhex.base.mysql.BHMysqlDataSource
+    url: jdbc:mysql://broker-admin-db:3306/broker_admin?serverTimezone=UTC&characterEncoding=utf8&useUnicode=true&allowPublicKeyRetrieval=true&useSSL=false
+    username: broker-admin-server-write
+    password: xxxxxx
+    driver-class-name: com.mysql.jdbc.Driver
+
+  rocketmq:
+    name-servers: mq-namesrv.bluehelix:9876
+    consumer-group: admin-consumer-group
+
+  redis:
+    lettuce:
+      pool:
+        max-active: 200
+        max-idle: 50
+        max-wait: 4s
+    timeout: 10s
+    cluster:
+      nodes:
+        - broker-admin-redis:6379
+
+snowflake:
+  datacenterId: 1
+  workerId: 1
+
+grpc:
+  port: 7405
+server:
+  port: 7505
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  migrations:
+    enabled: false
+    path: classpath:dbmigration/scripts
+
+logging:
+  config: classpath:logback.xml
+
+broker:
+  redis-key-prefix: broker-server-
